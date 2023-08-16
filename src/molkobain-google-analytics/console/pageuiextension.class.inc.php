@@ -44,6 +44,7 @@ class PageUIExtension implements iPageUIExtension
 		}
 
 		$username = ConfigHelper::GetUsername();
+		$organization = ConfigHelper::GetOrganization();
 		$oPage->add_linked_script('https://www.googletagmanager.com/gtag/js?id=' . $sTrackingCode);
 		$oPage->add_ready_script(
 			<<<JS

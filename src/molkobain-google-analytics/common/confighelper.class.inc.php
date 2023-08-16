@@ -115,4 +115,17 @@ class ConfigHelper extends BaseConfighelper
 		$username = $oUser->Get('login');
 		return $username;
 	}
+
+	/**
+	 * Returns user organization
+	 *
+	 * @param string $sOrganization
+	 *
+	 * @return null|string
+	 */
+	public static function GetOrganization(String $sOrganization = null)
+	{
+		$sOrganization = UserRights::GetContactOrganizationFriendlyname();
+		return $sOrganization;
+	}
 }

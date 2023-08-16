@@ -77,9 +77,11 @@ if (!class_exists('Molkobain\\iTop\\Extension\\GoogleAnalytics\\Portal\\Extensio
 			}
 
 			$username = ConfigHelper::GetUsername();
+			$organization = ConfigHelper::GetOrganization();
 			$sJSInline .= <<<EOF
 	window.dataLayer = window.dataLayer || [];
 	dataLayer.push({'event': 'Login','userId':'{$username}'});
+	dataLayer.push({'event': 'Team','organization':'{$organization}'});
 	function gtag(){dataLayer.push(arguments);}
 	gtag('js', new Date());
 	gtag('config', '{$sTrackingCode}');
