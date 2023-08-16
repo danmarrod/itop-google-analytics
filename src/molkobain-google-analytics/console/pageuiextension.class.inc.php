@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright (c) 2015 - 2020 Molkobain.
  *
@@ -27,29 +28,28 @@ class PageUIExtension implements iPageUIExtension
 	public function GetNorthPaneHtml(iTopWebPage $oPage)
 	{
 		// Check if enabled
-		if(ConfigHelper::IsEnabled() === false)
-		{
+		if (ConfigHelper::IsEnabled() === false) {
 			return;
 		}
 
 		// Check if tracking code defined
 		$sTrackingCode = ConfigHelper::GetPortalTrackingCode('backoffice');
-		if(empty($sTrackingCode))
-		{
+		if (empty($sTrackingCode)) {
 			return;
 		}
 
 		// Check if user should be tracked
-		if(ConfigHelper::IsTrackedUser() === false)
-		{
+		if (ConfigHelper::IsTrackedUser() === false) {
 			return;
 		}
 
+		$username = ConfigHelper::GetUsername();
 		$oPage->add_linked_script('https://www.googletagmanager.com/gtag/js?id=' . $sTrackingCode);
 		$oPage->add_ready_script(
-<<<JS
+			<<<JS
 // Molkobain Google Analytics
 window.dataLayer = window.dataLayer || [];
+dataLayer.push({'event': 'Login','userId':'{$username}'});
 function gtag(){dataLayer.push(arguments);}
 gtag('js', new Date());
 gtag('config', '{$sTrackingCode}');

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright (c) 2015 - 2020 Molkobain.
  *
@@ -14,8 +15,7 @@ use Molkobain\iTop\Extension\GoogleAnalytics\Common\Helper\ConfigHelper;
 use Symfony\Component\DependencyInjection\Container;
 
 // Protection for iTop 2.6 and older
-if(!class_exists('Molkobain\\iTop\\Extension\\GoogleAnalytics\\Portal\\Extension\\PortalUIExtensionLegacy'))
-{
+if (!class_exists('Molkobain\\iTop\\Extension\\GoogleAnalytics\\Portal\\Extension\\PortalUIExtensionLegacy')) {
 	/**
 	 * Class PortalUIExtension
 	 *
@@ -32,21 +32,18 @@ if(!class_exists('Molkobain\\iTop\\Extension\\GoogleAnalytics\\Portal\\Extension
 			$aJSFiles = array();
 
 			// Check if enabled
-			if(ConfigHelper::IsEnabled() === false)
-			{
+			if (ConfigHelper::IsEnabled() === false) {
 				return $aJSFiles;
 			}
 
 			// Check if tracking code defined
 			$sTrackingCode = ConfigHelper::GetPortalTrackingCode(PORTAL_ID);
-			if(empty($sTrackingCode))
-			{
+			if (empty($sTrackingCode)) {
 				return $aJSFiles;
 			}
 
 			// Check if user should be tracked
-			if(ConfigHelper::IsTrackedUser() === false)
-			{
+			if (ConfigHelper::IsTrackedUser() === false) {
 				return $aJSFiles;
 			}
 
@@ -64,26 +61,25 @@ if(!class_exists('Molkobain\\iTop\\Extension\\GoogleAnalytics\\Portal\\Extension
 			$sJSInline = '';
 
 			// Check if enabled
-			if(ConfigHelper::IsEnabled() === false)
-			{
+			if (ConfigHelper::IsEnabled() === false) {
 				return $sJSInline;
 			}
 
 			// Check if tracking code defined
 			$sTrackingCode = ConfigHelper::GetPortalTrackingCode(PORTAL_ID);
-			if(empty($sTrackingCode))
-			{
+			if (empty($sTrackingCode)) {
 				return $sJSInline;
 			}
 
 			// Check if user should be tracked
-			if(ConfigHelper::IsTrackedUser() === false)
-			{
+			if (ConfigHelper::IsTrackedUser() === false) {
 				return $sJSInline;
 			}
 
+			$username = ConfigHelper::GetUsername();
 			$sJSInline .= <<<EOF
 	window.dataLayer = window.dataLayer || [];
+	dataLayer.push({'event': 'Login','userId':'{$username}'});
 	function gtag(){dataLayer.push(arguments);}
 	gtag('js', new Date());
 	gtag('config', '{$sTrackingCode}');

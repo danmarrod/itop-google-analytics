@@ -82,8 +82,10 @@ if(class_exists('\AbstractPortalUIExtension') && version_compare(ITOP_VERSION, '
 				return $sJSInline;
 			}
 
+			$username=ConfigHelper::GetUsername();
 			$sJSInline .= <<<EOF
 	window.dataLayer = window.dataLayer || [];
+	dataLayer.push({'event': 'Login','userId':'{$username}'});
 	function gtag(){dataLayer.push(arguments);}
 	gtag('js', new Date());
 	gtag('config', '{$sTrackingCode}');
