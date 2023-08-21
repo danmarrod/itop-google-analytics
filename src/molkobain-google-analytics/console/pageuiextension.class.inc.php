@@ -45,15 +45,21 @@ class PageUIExtension implements iPageUIExtension
 
 		$username = ConfigHelper::GetUsername();
 		$organization = ConfigHelper::GetOrganization();
-		$oPage->add_linked_script('https://www.googletagmanager.com/gtag/js?id=' . $sTrackingCode);
 		$oPage->add_ready_script(
 			<<<JS
-// Molkobain Google Analytics
-window.dataLayer = window.dataLayer || [];
-dataLayer.push({'event': 'Login','userId':'{$username}'});
-function gtag(){dataLayer.push(arguments);}
-gtag('js', new Date());
-gtag('config', '{$sTrackingCode}');
+	<!-- Initialize datalayer -->
+	window.dataLayer = window.dataLayer || [];
+	dataLayer.push({'event': 'Login','userId':'{$username}'});
+	dataLayer.push({'event': 'Team','organization':'{$organization}'});
+	<!-- End Initialize datalayer  -->
+
+	<!-- Google Tag Manager -->
+	(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+	new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+	j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+	'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+	})(window,document,'script','dataLayer','{$sTrackingCode}');
+	<!-- End Google Tag Manager -->
 JS
 		);
 	}
